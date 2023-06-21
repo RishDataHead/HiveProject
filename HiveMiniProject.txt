@@ -1,0 +1,2633 @@
+hive>  Create table AgentLogingReport
+    > (
+    > sr_no int,
+    > Agent string,
+    > D_Date date,
+    > Login string,
+    > Logout string,
+    > Duration string
+    > )
+    > row format delimited
+    > fields terminated by ','
+    > tblproperties ("skip.header.line.count" = "1");
+OK
+Time taken: 1.182 seconds
+hive> Create table AgentPerformance
+    > (
+    > sr_no int,
+    > D_Date date,
+    > Agent_Name string,
+    > Total_charts int,
+    > Avg_Response_Time string,
+    > Avg_Resolution_Time string,
+    > Avg_Rating float,
+    > Total_Feedback int
+    > )
+    > row format delimited
+    > fields terminated by ','
+    > tblproperties ("skip.header.line.count" = "1");
+OK
+Time taken: 0.276 seconds
+hive>
+
+
+2. Dump the data inside the hdfs in the given schema location
+
+
+hive> Load data local inpath 'file:///bin/AgentLogingReport.csv' into table AgentLogingReport;
+Loading data to table default.agentlogingreport
+OK
+Time taken: 0.65 seconds
+hive> Load data local inpath 'file:///bin/AgentPerformance.csv' into table AgentPerformance;
+
+3. List of all agents' names.
+
+hive> select distinct agent from agentlogingreport;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230620211842_ae6f2048-3028-49df-b20b-727185d3323d
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-06-20 21:18:45,356 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local306190983_0001
+MapReduce Jobs Launched:
+Stage-Stage-1:  HDFS Read: 110702 HDFS Write: 330408 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Aditya Shinde
+Aditya_iot
+Amersh
+Ameya Jain
+Ankitjha
+Anurag Tiwari
+Aravind
+Ayushi Mishra
+Bharath
+Boktiar Ahmed Bappy
+Chaitra K Hiremath
+Deepranjan Gupta
+Dibyanshu
+Harikrishnan Shaji
+Hrisikesh Neogi
+Hyder Abbas
+Ineuron Intelligence
+Ishawant Kumar
+Jawala Prakash
+Jaydeep Dixit
+Khushboo Priya
+Madhulika G
+Mahesh Sarade
+Maitry
+Manjunatha A
+Mithun S
+Mukesh
+Muskan Garg
+Nandani Gupta
+Nishtha Jain
+Nitin M
+Prabir Kumar Satapathy
+Prateek _iot
+Prerna Singh
+Rishav Dash
+Saikumarreddy N
+Sanjeev Kumar
+Saurabh Shukla
+Shiva Srivastava
+Shivan K
+Shivananda Sonwane
+Shubham Sharma
+Sowmiya Sivakumar
+Sudhanshu Kumar
+Suraj S Bilgi
+Swati
+Tarun
+Wasim
+Zeeshan
+Time taken: 2.487 seconds, Fetched: 49 row(s)
+hive>
+
+
+4. Find out agent average rating.
+
+hive>  select Agent_name,avg(Avg_Rating) from AgentPerformance group by Agent_name;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230620212000_6f949e6c-231b-4791-90e6-16f5172b8462
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-06-20 21:20:01,801 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local439291011_0002
+MapReduce Jobs Launched:
+Stage-Stage-1:  HDFS Read: 330408 HDFS Write: 330408 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Abhishek        0.0
+Aditya  0.0
+Aditya Shinde   1.8003333409627278
+Aditya_iot      2.3453333377838135
+Amersh  0.0
+Ameya Jain      2.21966667175293
+Anirudh         0.6449999968210857
+Ankit Sharma    0.0
+Ankitjha        0.26666666666666666
+Anurag Tiwari   0.18333333333333332
+Aravind         2.1813333511352537
+Ashad Nasim     0.16666666666666666
+Ashish  0.0
+Ayushi Mishra   3.481999969482422
+Bharath         2.9836666584014893
+Boktiar Ahmed Bappy     3.567999982833862
+Chaitra K Hiremath      0.8646666606267294
+Deepranjan Gupta        2.886666695276896
+Dibyanshu       0.0
+Harikrishnan Shaji      2.6396666526794434
+Hitesh Choudhary        0.0
+Hrisikesh Neogi 3.1363333304723104
+Hyder Abbas     0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  3.543333347638448
+Jawala Prakash  3.472000018755595
+Jayant Kumar    1.068666664759318
+Jaydeep Dixit   3.1670000314712525
+Khushboo Priya  3.703666663169861
+Madhulika G     3.4986666520436605
+Mahak   0.1
+Mahesh Sarade   2.4003333330154417
+Maitry  2.9270000139872234
+Maneesh         0.16666666666666666
+Manjunatha A    3.5946666876475017
+Mithun S        2.359000023206075
+Mukesh  0.3096666653951009
+Mukesh Rao      0.25566666523615517
+Muskan Garg     0.712333329518636
+Nandani Gupta   2.9236666679382326
+Nishtha Jain    3.282333334287008
+Nitin M 0.0
+Prabir Kumar Satapathy  2.5103333314259846
+Prateek _iot    2.4383333206176756
+Prerna Singh    3.2326666434605915
+Rishav Dash     1.4268333355585734
+Rohan   0.0
+Saif Khan       0.0
+Saikumarreddy N 1.9803333441416422
+Samprit         0.0
+Sandipan Saha   0.4289999961853027
+Sanjeev Kumar   3.3830000241597493
+Sanjeevan       0.0
+Saurabh Shukla  0.5556666692097981
+Shiva Srivastava        0.9446666717529297
+Shivan K        2.841333341598511
+Shivan_S        0.14166666666666666
+Shivananda Sonwane      4.232666659355163
+Shubham Sharma  3.2253333568572997
+Sowmiya Sivakumar       1.2599999984105428
+Spuri   0.0
+Sudhanshu Kumar 0.3333333333333333
+Suraj S Bilgi   0.31200000445048015
+Swati   2.4236666917800904
+Tarun   0.05
+Uday Mishra     0.0
+Vasanth P       0.0
+Vivek   0.5006666660308838
+Wasim   2.400000015894572
+Zeeshan         2.286999988555908
+Time taken: 1.566 seconds, Fetched: 70 row(s)
+hive>
+
+5. Total working days for each agents 
+Hive> select Agent,count(distinct Date) from AgentLogingReport group by Agent;
+
+6. Total query that each agent have taken 
+
+hive> select Agent_name,sum(total_charts) from AgentPerformance group by Agent_name;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230620215701_a0f4a945-df57-4a50-94b4-0f9cc8bb4580
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-06-20 21:57:02,672 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1291036275_0002
+MapReduce Jobs Launched:
+Stage-Stage-1:  HDFS Read: 550126 HDFS Write: 441122 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+agent_name      _c1
+Abhishek        0
+Aditya  0
+Aditya Shinde   277
+Aditya_iot      231
+Amersh  0
+Ameya Jain      322
+Anirudh         81
+Ankit Sharma    0
+Ankitjha        5
+Anurag Tiwari   4
+Aravind         366
+Ashad Nasim     18
+Ashish  0
+Ayushi Mishra   514
+Bharath         369
+Boktiar Ahmed Bappy     452
+Chaitra K Hiremath      64
+Deepranjan Gupta        493
+Dibyanshu       1
+Harikrishnan Shaji      381
+Hitesh Choudhary        1
+Hrisikesh Neogi 578
+Hyder Abbas     0
+Ineuron Intelligence    0
+Ishawant Kumar  338
+Jawala Prakash  439
+Jayant Kumar    127
+Jaydeep Dixit   512
+Khushboo Priya  446
+Madhulika G     469
+Mahak   7
+Mahesh Sarade   364
+Maitry  542
+Maneesh         4
+Manjunatha A    413
+Mithun S        503
+Mukesh  19
+Mukesh Rao      5
+Muskan Garg     56
+Nandani Gupta   560
+Nishtha Jain    373
+Nitin M 0
+Prabir Kumar Satapathy  299
+Prateek _iot    190
+Prerna Singh    401
+Rishav Dash     409
+Rohan   0
+Saif Khan       0
+Saikumarreddy N 364
+Samprit         1
+Sandipan Saha   30
+Sanjeev Kumar   507
+Sanjeevan       0
+Saurabh Shukla  16
+Shiva Srivastava        53
+Shivan K        357
+Shivan_S        7
+Shivananda Sonwane      441
+Shubham Sharma  510
+Sowmiya Sivakumar       206
+Spuri   0
+Sudhanshu Kumar 2
+Suraj S Bilgi   28
+Swati   524
+Tarun   22
+Uday Mishra     0
+Vasanth P       0
+Vivek   44
+Wasim   433
+Zeeshan         542
+Time taken: 1.399 seconds, Fetched: 70 row(s)
+hive>
+
+7. Total Feedback that each agent have received 
+
+select Agent_name,sum(Total_Feedback) from AgentPerformance group by Agent_name;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230620215929_d4ed2a6c-385a-4645-a23e-4294cebbfe55
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-06-20 21:59:30,775 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local872264152_0004
+MapReduce Jobs Launched:
+Stage-Stage-1:  HDFS Read: 989546 HDFS Write: 441122 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+agent_name      _c1
+Abhishek        0
+Aditya  0
+Aditya Shinde   153
+Aditya_iot      131
+Amersh  0
+Ameya Jain      228
+Anirudh         39
+Ankit Sharma    0
+Ankitjha        3
+Anurag Tiwari   3
+Aravind         233
+Ashad Nasim     9
+Ashish  0
+Ayushi Mishra   329
+Bharath         247
+Boktiar Ahmed Bappy     311
+Chaitra K Hiremath      37
+Deepranjan Gupta        312
+Dibyanshu       0
+Harikrishnan Shaji      231
+Hitesh Choudhary        0
+Hrisikesh Neogi 367
+Hyder Abbas     0
+Ineuron Intelligence    0
+Ishawant Kumar  202
+Jawala Prakash  250
+Jayant Kumar    70
+Jaydeep Dixit   305
+Khushboo Priya  289
+Madhulika G     281
+Mahak   5
+Mahesh Sarade   216
+Maitry  347
+Maneesh         3
+Manjunatha A    254
+Mithun S        364
+Mukesh  17
+Mukesh Rao      5
+Muskan Garg     37
+Nandani Gupta   308
+Nishtha Jain    257
+Nitin M 0
+Prabir Kumar Satapathy  222
+Prateek _iot    107
+Prerna Singh    235
+Rishav Dash     264
+Rohan   0
+Saif Khan       0
+Saikumarreddy N 290
+Samprit         0
+Sandipan Saha   18
+Sanjeev Kumar   311
+Sanjeevan       0
+Saurabh Shukla  8
+Shiva Srivastava        46
+Shivan K        243
+Shivan_S        4
+Shivananda Sonwane      263
+Shubham Sharma  300
+Sowmiya Sivakumar       141
+Spuri   0
+Sudhanshu Kumar 2
+Suraj S Bilgi   15
+Swati   302
+Tarun   6
+Uday Mishra     0
+Vasanth P       0
+Vivek   20
+Wasim   284
+Zeeshan         335
+Time taken: 1.317 seconds, Fetched: 70 row(s)
+hive>
+
+8. Agent name who have average rating between 3.5 to 4 
+
+hive>  select Agent_name,Avg_Rating from AgentPerformance where Avg_Rating between 3.5 and 4;
+OK
+agent_name      avg_rating
+Swati   3.67
+Manjunatha A    3.6
+Boktiar Ahmed Bappy     4.0
+Prateek _iot    3.75
+Nandani Gupta   3.79
+Jaydeep Dixit   3.95
+Mahesh Sarade   3.94
+Zeeshan         3.79
+Hrisikesh Neogi 3.77
+Muskan Garg     4.0
+Khushboo Priya  3.79
+Wasim   3.95
+Jawala Prakash  3.89
+Shiva Srivastava        4.0
+Nishtha Jain    3.67
+Maitry  4.0
+Shiva Srivastava        4.0
+Nandani Gupta   3.61
+Prerna Singh    3.8
+Shivan K        4.0
+Boktiar Ahmed Bappy     3.8
+Muskan Garg     3.62
+Chaitra K Hiremath      4.0
+Harikrishnan Shaji      3.73
+Wasim   3.92
+Deepranjan Gupta        3.69
+Mahesh Sarade   3.81
+Nishtha Jain    3.92
+Shivan K        3.9
+Madhulika G     3.62
+Rishav Dash     3.8
+Prabir Kumar Satapathy  4.0
+Boktiar Ahmed Bappy     4.0
+Maitry  3.73
+Nishtha Jain    3.69
+Khushboo Priya  3.95
+Boktiar Ahmed Bappy     3.77
+Mahesh Sarade   3.5
+Rishav Dash     3.67
+Mithun S        3.75
+Jawala Prakash  3.68
+Aditya_iot      3.86
+Swati   3.77
+Nandani Gupta   3.73
+Madhulika G     3.86
+Boktiar Ahmed Bappy     3.9
+Madhulika G     4.0
+Ishawant Kumar  3.75
+Boktiar Ahmed Bappy     3.81
+Deepranjan Gupta        3.75
+Deepranjan Gupta        3.56
+Harikrishnan Shaji      3.93
+Ishawant Kumar  4.0
+Khushboo Priya  4.0
+Nandani Gupta   3.67
+Mahesh Sarade   3.81
+Swati   3.76
+Maitry  3.73
+Rishav Dash     3.89
+Madhulika G     3.87
+Ayushi Mishra   3.88
+Shivananda Sonwane      3.53
+Ameya Jain      4.0
+Mahesh Sarade   3.85
+Mithun S        3.85
+Ishawant Kumar  3.67
+Khushboo Priya  3.5
+Boktiar Ahmed Bappy     4.0
+Aditya_iot      3.53
+Jawala Prakash  4.0
+Sanjeev Kumar   4.0
+Sandipan Saha   3.62
+Madhulika G     3.82
+Ayushi Mishra   3.86
+Shivan K        4.0
+Hrisikesh Neogi 3.8
+Nandani Gupta   3.89
+Harikrishnan Shaji      3.7
+Nishtha Jain    3.67
+Manjunatha A    4.0
+Anirudh         3.77
+Swati   3.62
+Maitry  3.75
+Madhulika G     4.0
+Jaydeep Dixit   4.0
+Zeeshan         3.75
+Nishtha Jain    3.73
+Wasim   3.64
+Manjunatha A    4.0
+Ishawant Kumar  3.67
+Jayant Kumar    3.76
+Maneesh         4.0
+Harikrishnan Shaji      4.0
+Anurag Tiwari   3.5
+Mithun S        3.86
+Prabir Kumar Satapathy  4.0
+Saurabh Shukla  3.67
+Aditya_iot      3.83
+Maitry  3.92
+Shivananda Sonwane      3.71
+Ameya Jain      4.0
+Swati   4.0
+Ashad Nasim     4.0
+Prabir Kumar Satapathy  4.0
+Boktiar Ahmed Bappy     3.78
+Nishtha Jain    4.0
+Ayushi Mishra   3.8
+Shivan K        4.0
+Shubham Sharma  4.0
+Jawala Prakash  3.8
+Sanjeev Kumar   4.0
+Aditya Shinde   3.54
+Deepranjan Gupta        3.71
+Sanjeev Kumar   4.0
+Time taken: 0.136 seconds, Fetched: 114 row(s)
+hive>
+
+9.)Agent name who have rating less than 3.5 
+hive> select Agent_name,Avg_Rating from AgentPerformance where Avg_Rating < 3.5;
+OK
+agent_name      avg_rating
+Nandani Gupta   3.14
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Ashish  0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Aditya_iot      0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Wasim   0.0
+Samprit         0.0
+Maitry  0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Aravind         0.0
+Tarun   0.0
+Muskan Garg     0.0
+Ankit Sharma    0.0
+Bharath         0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Aditya  0.0
+Amersh  0.0
+Sandipan Saha   0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Mukesh Rao      0.0
+Zeeshan         0.0
+Rishav Dash     0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Jaydeep Dixit   0.0
+Sudhanshu Kumar 0.0
+Maneesh         0.0
+Hyder Abbas     0.0
+Ashish  0.0
+Rohan   0.0
+Vivek   0.0
+Nitin M 0.0
+Shivan_S        0.0
+Spuri   0.0
+Ayushi Mishra   0.0
+Chaitra K Hiremath      0.0
+Prateek _iot    0.0
+Jawala Prakash  3.0
+Sowmiya Sivakumar       3.43
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Nishtha Jain    0.0
+Jayant Kumar    0.0
+Swati   0.0
+Saurabh Shukla  0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Aravind         0.0
+Khushboo Priya  0.0
+Maitry  0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Aditya  0.0
+Amersh  0.0
+Shubham Sharma  0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Manjunatha A    0.0
+Ameya Jain      0.0
+Ankitjha        0.0
+Anurag Tiwari   0.0
+Saif Khan       0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Sudhanshu Kumar 0.0
+Maneesh         0.0
+Hyder Abbas     0.0
+Saikumarreddy N 0.0
+Rohan   0.0
+Vivek   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Spuri   0.0
+Shiva Srivastava        2.17
+Aditya_iot      2.67
+Nishtha Jain    3.36
+Hitesh Choudhary        0.0
+Sanjeev Kumar   0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Swati   0.0
+Mithun S        0.0
+Prerna Singh    0.0
+Saurabh Shukla  0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Aravind         0.0
+Maitry  0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Aditya  0.0
+Amersh  0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Sudhanshu Kumar 0.0
+Maneesh         0.0
+Hyder Abbas     0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Nandani Gupta   0.0
+Vivek   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Shivan K        0.0
+Spuri   0.0
+Mahesh Sarade   0.0
+Madhulika G     0.0
+Sowmiya Sivakumar       0.0
+Boktiar Ahmed Bappy     0.0
+Aditya_iot      3.33
+Ankitjha        3.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Swati   0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Aravind         0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Aditya  0.0
+Amersh  0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Rishav Dash     0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Sudhanshu Kumar 0.0
+Maneesh         0.0
+Hyder Abbas     0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Vivek   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Shivan K        0.0
+Spuri   0.0
+Jaydeep Dixit   0.0
+Ankitjha        0.0
+Chaitra K Hiremath      3.43
+Mithun S        3.29
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Nishtha Jain    0.0
+Jayant Kumar    0.0
+Swati   0.0
+Saurabh Shukla  0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Aravind         0.0
+Tarun   0.0
+Bharath         0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Aditya  0.0
+Amersh  0.0
+Shubham Sharma  0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Manjunatha A    0.0
+Ameya Jain      0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Sudhanshu Kumar 0.0
+Maneesh         0.0
+Hyder Abbas     0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Vivek   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Spuri   0.0
+Jawala Prakash  3.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Hrisikesh Neogi 0.0
+Aditya Shinde   0.0
+Uday Mishra     0.0
+Jayant Kumar    0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Khushboo Priya  0.0
+Aravind         0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Ashish  0.0
+Maneesh         0.0
+Hyder Abbas     0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Spuri   0.0
+Nandani Gupta   0.0
+Vivek   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Mahesh Sarade   0.0
+Madhulika G     0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Sanjeev Kumar   0.0
+Mukesh  0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Aditya Shinde   0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Mithun S        0.0
+Saurabh Shukla  0.0
+Wasim   0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Prerna Singh    0.0
+Rishav Dash     0.0
+Tarun   0.0
+Muskan Garg     0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Harikrishnan Shaji      0.0
+Ashish  0.0
+Prateek _iot    0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Spuri   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Vivek   0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Dibyanshu       0.0
+Ashish  0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Prabir Kumar Satapathy  0.0
+Wasim   0.0
+Deepranjan Gupta        0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Tarun   0.0
+Muskan Garg     0.0
+Bharath         0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Zeeshan         0.0
+Manjunatha A    0.0
+Rishav Dash     0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Ashish  0.0
+Prateek _iot    0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Spuri   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Vivek   0.0
+Jaydeep Dixit   0.0
+Chaitra K Hiremath      0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Ashish  0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Swati   0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Deepranjan Gupta        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Tarun   0.0
+Muskan Garg     0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Shubham Sharma  0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Manjunatha A    0.0
+Ameya Jain      0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Spuri   0.0
+Shivan_S        0.0
+Vivek   0.0
+Nitin M 0.0
+Ishawant Kumar  3.18
+Deepranjan Gupta        0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Sanjeev Kumar   0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Ashish  0.0
+Nishtha Jain    0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Swati   0.0
+Hyder Abbas     0.0
+Mithun S        0.0
+Saurabh Shukla  0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Prerna Singh    0.0
+Khushboo Priya  0.0
+Aravind         0.0
+Tarun   0.0
+Muskan Garg     0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Mahak   0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Ashish  0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Suraj S Bilgi   0.0
+Rohan   0.0
+Spuri   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Vivek   0.0
+Nitin M 0.0
+Shivan K        0.0
+Mahesh Sarade   0.0
+Madhulika G     0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Boktiar Ahmed Bappy     2.71
+Jawala Prakash  3.27
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Ashish  0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Prabir Kumar Satapathy  0.0
+Deepranjan Gupta        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Tarun   0.0
+Muskan Garg     0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Rishav Dash     0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ankitjha        0.0
+Ashish  0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Rohan   0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Vivek   0.0
+Nitin M 0.0
+Shivan K        0.0
+Jaydeep Dixit   0.0
+Chaitra K Hiremath      0.0
+Ayushi Mishra   3.25
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Aditya Shinde   0.0
+Nishtha Jain    0.0
+Uday Mishra     0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Swati   0.0
+Saurabh Shukla  0.0
+Bharath         0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Shubham Sharma  0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Sandipan Saha   0.0
+Ameya Jain      0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Manjunatha A    0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Spuri   0.0
+Rohan   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Vivek   0.0
+Nitin M 0.0
+Chaitra K Hiremath      0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Hrisikesh Neogi 0.0
+Aditya Shinde   0.0
+Uday Mishra     0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Swati   0.0
+Saurabh Shukla  0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Aravind         0.0
+Maitry  0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Sandipan Saha   0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Maneesh         0.0
+Saikumarreddy N 0.0
+Rohan   0.0
+Sudhanshu Kumar 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Vivek   0.0
+Nitin M 0.0
+Madhulika G     0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Aditya Shinde   0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Deepranjan Gupta        0.0
+Bharath         0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Prerna Singh    0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Shubham Sharma  0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Prateek _iot    0.0
+Maneesh         0.0
+Rohan   0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Vivek   0.0
+Nitin M 0.0
+Jawala Prakash  0.0
+Jaydeep Dixit   0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Swati   0.0
+Saurabh Shukla  0.0
+Bharath         0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Samprit         0.0
+Maitry  0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Mukesh Rao      0.0
+Rishav Dash     0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Prateek _iot    0.0
+Maneesh         0.0
+Rohan   0.0
+Sudhanshu Kumar 0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Vivek   0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Mithun S        0.0
+Saurabh Shukla  0.0
+Prabir Kumar Satapathy  0.0
+Deepranjan Gupta        0.0
+Bharath         0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Wasim   0.0
+Aravind         0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Aditya  0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Prateek _iot    0.0
+Maneesh         0.0
+Saikumarreddy N 0.0
+Rohan   0.0
+Sudhanshu Kumar 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Shivan K        0.0
+Vivek   0.0
+Nitin M 0.0
+Ayushi Mishra   0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Hitesh Choudhary        0.0
+Sanjeevan       0.0
+Hitesh Choudhary        0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Shivananda Sonwane      0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Prabir Kumar Satapathy  0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Prerna Singh    0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Amersh  0.0
+Vasanth P       0.0
+Shubham Sharma  0.0
+Ineuron Intelligence    0.0
+Mahak   0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Rohan   0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Vivek   0.0
+Nitin M 0.0
+Jawala Prakash  0.0
+Jaydeep Dixit   0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Rishav Dash     0.0
+Vivek   1.0
+Mahesh Sarade   2.75
+Sanjeevan       0.0
+Sanjeev Kumar   0.0
+Hitesh Choudhary        0.0
+Mukesh  0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Mithun S        0.0
+Saurabh Shukla  0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Boktiar Ahmed Bappy     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Maneesh         0.0
+Sudhanshu Kumar 0.0
+Rohan   0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Aditya_iot      3.4
+Vivek   3.29
+Sanjeevan       0.0
+Hitesh Choudhary        0.0
+Mukesh  0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Deepranjan Gupta        0.0
+Bharath         0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Wasim   0.0
+Aravind         0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Boktiar Ahmed Bappy     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Ameya Jain      0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Ashish  0.0
+Saikumarreddy N 0.0
+Sudhanshu Kumar 0.0
+Rohan   0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Shivan K        0.0
+Nitin M 0.0
+Ayushi Mishra   0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Vivek   2.33
+Sanjeevan       0.0
+Sanjeev Kumar   0.0
+Hitesh Choudhary        0.0
+Mukesh  0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Swati   0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Maitry  0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Boktiar Ahmed Bappy     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Ameya Jain      0.0
+Mukesh Rao      0.0
+Rishav Dash     0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Ashish  0.0
+Saikumarreddy N 0.0
+Sudhanshu Kumar 0.0
+Rohan   0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Shivan_S        0.0
+Nitin M 0.0
+Madhulika G     0.0
+Chaitra K Hiremath      0.0
+Sowmiya Sivakumar       0.0
+Harikrishnan Shaji      3.25
+Anirudh         1.0
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Aditya Shinde   0.0
+Hyder Abbas     0.0
+Mithun S        0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Abhishek        0.0
+Prerna Singh    0.0
+Wasim   0.0
+Maitry  0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Boktiar Ahmed Bappy     0.0
+Amersh  0.0
+Vasanth P       0.0
+Shubham Sharma  0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Ameya Jain      0.0
+Mukesh Rao      0.0
+Zeeshan         0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Ashish  0.0
+Prateek _iot    0.0
+Saikumarreddy N 0.0
+Sudhanshu Kumar 0.0
+Rohan   0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Shivan_S        0.0
+Vivek   0.0
+Nitin M 0.0
+Jaydeep Dixit   0.0
+Chaitra K Hiremath      0.0
+Jawala Prakash  0.0
+Sowmiya Sivakumar       0.0
+Mahesh Sarade   3.11
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Ashish  0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Mithun S        0.0
+Swati   0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Wasim   0.0
+Maitry  0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Rishav Dash     0.0
+Ameya Jain      0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Anurag Tiwari   0.0
+Prateek _iot    0.0
+Ashish  0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Rohan   0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Sowmiya Sivakumar       0.0
+Vivek   0.0
+Nitin M 0.0
+Chaitra K Hiremath      0.0
+Jawala Prakash  0.0
+Vivek   3.4
+Mahesh Sarade   3.27
+Mukesh Rao      1.0
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Ashish  0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Deepranjan Gupta        0.0
+Bharath         0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Wasim   0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Ameya Jain      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Maneesh         0.0
+Ashish  0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Rohan   0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Sowmiya Sivakumar       0.0
+Shivan K        0.0
+Nitin M 0.0
+Ayushi Mishra   0.0
+Chaitra K Hiremath      0.0
+Jayant Kumar    3.17
+Sanjeev Kumar   3.0
+Anurag Tiwari   2.0
+Harikrishnan Shaji      1.0
+Mithun S        2.0
+Mukesh Rao      1.67
+Maneesh         0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Anirudh         0.0
+Ashish  0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Shivananda Sonwane      0.0
+Uday Mishra     0.0
+Aditya Shinde   0.0
+Hyder Abbas     0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Prerna Singh    0.0
+Muskan Garg     0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Sandipan Saha   0.0
+Shubham Sharma  0.0
+Mahak   0.0
+Ameya Jain      0.0
+Saif Khan       0.0
+Ankitjha        0.0
+Aditya  0.0
+Ashish  0.0
+Rohan   0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Sowmiya Sivakumar       0.0
+Mahesh Sarade   0.0
+Vivek   0.0
+Nitin M 0.0
+Chaitra K Hiremath      0.0
+Jawala Prakash  0.0
+Jaydeep Dixit   0.0
+Prateek _iot    0.0
+Dibyanshu       0.0
+Shivan K        0.0
+Anirudh         0.0
+Sanjeev Kumar   0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Mithun S        0.0
+Ashish  0.0
+Shiva Srivastava        0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Hyder Abbas     0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Rishav Dash     0.0
+Samprit         0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Wasim   0.0
+Muskan Garg     0.0
+Tarun   0.0
+Aravind         0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Ameya Jain      0.0
+Zeeshan         0.0
+Ankitjha        0.0
+Aditya  0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Rohan   0.0
+Saikumarreddy N 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Mahesh Sarade   0.0
+Sowmiya Sivakumar       0.0
+Vivek   0.0
+Nitin M 0.0
+Chaitra K Hiremath      0.0
+Manjunatha A    0.0
+Ashad Nasim     1.0
+Khushboo Priya  0.0
+Anirudh         1.0
+Maneesh         1.0
+Shivan K        0.0
+Jayant Kumar    3.33
+Mahak   3.0
+Samprit         0.0
+Mithun S        1.0
+Shivananda Sonwane      3.4
+Prerna Singh    3.33
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Ashish  0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Hyder Abbas     0.0
+Saurabh Shukla  0.0
+Bharath         0.0
+Deepranjan Gupta        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Abhishek        0.0
+Wasim   0.0
+Muskan Garg     0.0
+Aravind         0.0
+Tarun   0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.0
+Sandipan Saha   0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Aditya  0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Prateek _iot    0.0
+Rohan   0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Suraj S Bilgi   0.0
+Spuri   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Sowmiya Sivakumar       0.0
+Nitin M 0.0
+Ayushi Mishra   0.0
+Chaitra K Hiremath      0.0
+Sanjeev Kumar   0.0
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Mithun S        0.0
+Anirudh         0.0
+Ashish  0.0
+Shiva Srivastava        0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Hyder Abbas     0.0
+Swati   0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Wasim   0.0
+Maitry  0.0
+Muskan Garg     0.0
+Aravind         0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Amersh  0.0
+Vasanth P       0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Rishav Dash     0.0
+Ameya Jain      0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Aditya  0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Ashish  0.0
+Harikrishnan Shaji      0.0
+Prateek _iot    0.0
+Rohan   0.0
+Sudhanshu Kumar 0.0
+Saikumarreddy N 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Sowmiya Sivakumar       0.0
+Vivek   0.0
+Nitin M 0.0
+Madhulika G     0.0
+Chaitra K Hiremath      0.0
+Shivan K        1.0
+Jayant Kumar    3.24
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Mithun S        0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Hrisikesh Neogi 0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Nishtha Jain    0.0
+Hyder Abbas     0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Wasim   0.0
+Prerna Singh    0.0
+Muskan Garg     0.0
+Aravind         0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Khushboo Priya  0.0
+Vasanth P       0.0
+Amersh  0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.0
+Sandipan Saha   0.0
+Shubham Sharma  0.0
+Mahak   0.0
+Ameya Jain      0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Aditya  0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Harikrishnan Shaji      0.0
+Ashish  0.0
+Prateek _iot    0.0
+Rohan   0.0
+Saikumarreddy N 0.0
+Sudhanshu Kumar 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Sowmiya Sivakumar       0.0
+Vivek   0.0
+Nitin M 0.0
+Jaydeep Dixit   0.0
+Chaitra K Hiremath      0.0
+Nandani Gupta   3.43
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Mithun S        0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Jayant Kumar    0.0
+Nishtha Jain    0.0
+Hyder Abbas     0.0
+Swati   0.0
+Prabir Kumar Satapathy  0.0
+Saurabh Shukla  0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Wasim   0.0
+Maitry  0.0
+Muskan Garg     0.0
+Aravind         0.0
+Tarun   0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Amersh  0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Rishav Dash     0.0
+Ameya Jain      0.0
+Zeeshan         0.0
+Mukesh Rao      0.0
+Aditya  0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Harikrishnan Shaji      0.0
+Ashish  0.0
+Prateek _iot    0.0
+Rohan   0.0
+Saikumarreddy N 0.0
+Sudhanshu Kumar 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Sowmiya Sivakumar       0.0
+Shivan K        0.0
+Nitin M 0.0
+Vivek   0.0
+Chaitra K Hiremath      0.0
+Saurabh Shukla  3.0
+Tarun   1.5
+Sanjeevan       0.0
+Mukesh  0.0
+Hitesh Choudhary        0.0
+Mithun S        0.0
+Anirudh         0.0
+Shiva Srivastava        0.0
+Ashish  0.0
+Dibyanshu       0.0
+Uday Mishra     0.0
+Aditya_iot      0.0
+Nishtha Jain    0.0
+Aditya Shinde   0.0
+Hyder Abbas     0.0
+Prabir Kumar Satapathy  0.0
+Bharath         0.0
+Deepranjan Gupta        0.0
+Abhishek        0.0
+Rishav Dash     0.0
+Ankit Sharma    0.0
+Samprit         0.0
+Wasim   0.0
+Muskan Garg     0.0
+Aravind         0.0
+Ashad Nasim     0.0
+Vasanth P       0.0
+Amersh  0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.0
+Sandipan Saha   0.0
+Mahak   0.0
+Ameya Jain      0.0
+Mukesh Rao      0.0
+Zeeshan         0.0
+Aditya  0.0
+Ankitjha        0.0
+Saif Khan       0.0
+Anurag Tiwari   0.0
+Maneesh         0.0
+Harikrishnan Shaji      0.0
+Ashish  0.0
+Prateek _iot    0.0
+Rohan   0.0
+Saikumarreddy N 0.0
+Sudhanshu Kumar 0.0
+Spuri   0.0
+Suraj S Bilgi   0.0
+Nandani Gupta   0.0
+Shivan_S        0.0
+Mahesh Sarade   0.0
+Sowmiya Sivakumar       0.0
+Nitin M 0.0
+Vivek   0.0
+Ayushi Mishra   0.0
+Chaitra K Hiremath      0.0
+Time taken: 0.083 seconds, Fetched: 1474 row(s)
+hive>
+
+10)Agent name who have rating more than 4.5 
+select Agent_name,Avg_Rating from AgentPerformance where Avg_Rating > 4.5;
+
+11. How many feedback agents have received more than 4.5 average
+Hive> select Agent_name,avg(Total_Feedback) from AgentPerformance having avg(Total_Feedback) > 4.5;
+
+12. average weekly response time for each agent.
+hive> select s.agent_name,avg(col1[0]*3600+col1[1]*60+substr(col1[2],1,2))/3600  from(
+    > select agent_name,split(Avg_Response_Time,':') as col1  from AgentPerformance )s group by s.agent_name;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230620220327_4fb8a07f-0947-469d-864d-73667dc3008a
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-06-20 22:03:29,346 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local990788296_0005
+MapReduce Jobs Launched:
+Stage-Stage-1:  HDFS Read: 1648676 HDFS Write: 441122 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+s.agent_name    _c1
+Abhishek        0.0
+Aditya  0.0
+Aditya Shinde   0.00825925925925926
+Aditya_iot      0.009435185185185185
+Amersh  0.0
+Ameya Jain      0.00587037037037037
+Anirudh         0.006046296296296296
+Ankit Sharma    0.0
+Ankitjha        0.0012314814814814816
+Anurag Tiwari   0.0023425925925925927
+Aravind         0.005935185185185186
+Ashad Nasim     0.01073148148148148
+Ashish  0.0
+Ayushi Mishra   0.01675925925925926
+Bharath         0.0074444444444444445
+Boktiar Ahmed Bappy     0.01834259259259259
+Chaitra K Hiremath      0.004203703703703703
+Deepranjan Gupta        0.014777777777777779
+Dibyanshu       3.5185185185185184E-4
+Harikrishnan Shaji      0.009435185185185185
+Hitesh Choudhary        0.0
+Hrisikesh Neogi 0.014027777777777778
+Hyder Abbas     0.0
+Ineuron Intelligence    0.0
+Ishawant Kumar  0.013925925925925925
+Jawala Prakash  0.026175925925925925
+Jayant Kumar    0.005120370370370371
+Jaydeep Dixit   0.012333333333333333
+Khushboo Priya  0.017027777777777777
+Madhulika G     0.018453703703703705
+Mahak   0.0
+Mahesh Sarade   0.012898148148148146
+Maitry  0.017731481481481483
+Maneesh         0.00125
+Manjunatha A    0.010046296296296296
+Mithun S        0.008037037037037037
+Mukesh  9.25925925925926E-4
+Mukesh Rao      0.003648148148148148
+Muskan Garg     0.0016481481481481482
+Nandani Gupta   0.01662962962962963
+Nishtha Jain    0.016888888888888887
+Nitin M 0.0
+Prabir Kumar Satapathy  0.010555555555555556
+Prateek _iot    0.00625
+Prerna Singh    0.01324074074074074
+Rishav Dash     0.008421296296296297
+Rohan   0.0
+Saif Khan       0.0
+Saikumarreddy N 0.006990740740740741
+Samprit         0.0
+Sandipan Saha   0.001638888888888889
+Sanjeev Kumar   0.014222222222222223
+Sanjeevan       0.0
+Saurabh Shukla  9.722222222222222E-4
+Shiva Srivastava        0.002777777777777778
+Shivan K        0.013305555555555555
+Shivan_S        6.759259259259258E-4
+Shivananda Sonwane      0.015555555555555555
+Shubham Sharma  0.013425925925925926
+Sowmiya Sivakumar       0.007268518518518519
+Spuri   0.0
+Sudhanshu Kumar 0.0011111111111111111
+Suraj S Bilgi   0.0016851851851851852
+Swati   0.016055555555555556
+Tarun   0.0
+Uday Mishra     0.0
+Vasanth P       0.0
+Vivek   0.0038055555555555555
+Wasim   0.00825
+Zeeshan         0.01714814814814815
+Time taken: 1.355 seconds, Fetched: 70 row(s)
+hive>
+
+
+13. average weekly resolution time for each agents 
+Hive> select s.agent_name,avg(col1[0]*3600+col1[1]*60+substr(col1[2],1,2))/3600  from(
+select agent_name,split(Avg_Resolution_Time,':') as col1  from AgentPerformance )s group by s.agent_name;
+
+
+14. Find the number of chat on which they have received a feedback 
+ select agent_name,sum(Total_charts),Total_Feedback from AgentPerformance where Total_Feedback> 0 group by agent_name,Total_Feedback;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230620220432_856bc29a-836b-41cc-ad8f-1a11ced05a3b
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-06-20 22:04:34,090 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local708161547_0006
+MapReduce Jobs Launched:
+Stage-Stage-1:  HDFS Read: 1868386 HDFS Write: 441122 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+agent_name      _c1     total_feedback
+Aditya Shinde   8       7
+Aditya Shinde   17      8
+Aditya Shinde   67      9
+Aditya Shinde   18      11
+Aditya Shinde   27      14
+Aditya Shinde   49      15
+Aditya Shinde   34      19
+Aditya Shinde   57      28
+Aditya_iot      11      2
+Aditya_iot      10      3
+Aditya_iot      36      5
+Aditya_iot      35      6
+Aditya_iot      10      7
+Aditya_iot      12      10
+Aditya_iot      14      11
+Aditya_iot      47      13
+Aditya_iot      32      15
+Aditya_iot      24      16
+Ameya Jain      1       1
+Ameya Jain      14      7
+Ameya Jain      16      8
+Ameya Jain      26      11
+Ameya Jain      18      13
+Ameya Jain      24      14
+Ameya Jain      45      15
+Ameya Jain      21      16
+Ameya Jain      24      18
+Ameya Jain      57      20
+Ameya Jain      37      26
+Ameya Jain      39      33
+Anirudh         7       1
+Anirudh         12      2
+Anirudh         26      8
+Anirudh         35      13
+Ankitjha        1       1
+Ankitjha        3       2
+Anurag Tiwari   1       1
+Anurag Tiwari   3       2
+Aravind         1       1
+Aravind         25      12
+Aravind         16      13
+Aravind         19      14
+Aravind         57      15
+Aravind         50      17
+Aravind         32      18
+Aravind         31      19
+Aravind         30      20
+Aravind         30      21
+Aravind         35      24
+Aravind         40      27
+Ashad Nasim     3       2
+Ashad Nasim     15      7
+Ayushi Mishra   4       2
+Ayushi Mishra   4       3
+Ayushi Mishra   26      6
+Ayushi Mishra   16      7
+Ayushi Mishra   8       8
+Ayushi Mishra   17      10
+Ayushi Mishra   85      12
+Ayushi Mishra   20      13
+Ayushi Mishra   18      14
+Ayushi Mishra   20      15
+Ayushi Mishra   23      16
+Ayushi Mishra   52      17
+Ayushi Mishra   25      18
+Ayushi Mishra   29      19
+Ayushi Mishra   29      20
+Ayushi Mishra   96      22
+Ayushi Mishra   42      24
+Bharath         11      5
+Bharath         30      7
+Bharath         11      9
+Bharath         16      10
+Bharath         15      11
+Bharath         15      12
+Bharath         32      13
+Bharath         75      14
+Bharath         45      15
+Bharath         23      16
+Bharath         21      17
+Bharath         52      18
+Bharath         23      19
+Boktiar Ahmed Bappy     7       2
+Boktiar Ahmed Bappy     10      3
+Boktiar Ahmed Bappy     4       4
+Boktiar Ahmed Bappy     11      5
+Boktiar Ahmed Bappy     6       6
+Boktiar Ahmed Bappy     7       7
+Boktiar Ahmed Bappy     23      8
+Boktiar Ahmed Bappy     50      10
+Boktiar Ahmed Bappy     19      11
+Boktiar Ahmed Bappy     23      12
+Boktiar Ahmed Bappy     22      14
+Boktiar Ahmed Bappy     26      15
+Boktiar Ahmed Bappy     24      16
+Boktiar Ahmed Bappy     23      17
+Boktiar Ahmed Bappy     24      18
+Boktiar Ahmed Bappy     28      21
+Boktiar Ahmed Bappy     31      25
+Boktiar Ahmed Bappy     35      26
+Boktiar Ahmed Bappy     34      28
+Boktiar Ahmed Bappy     43      30
+Chaitra K Hiremath      1       1
+Chaitra K Hiremath      11      4
+Chaitra K Hiremath      21      7
+Chaitra K Hiremath      31      9
+Deepranjan Gupta        5       3
+Deepranjan Gupta        12      4
+Deepranjan Gupta        5       5
+Deepranjan Gupta        17      12
+Deepranjan Gupta        19      13
+Deepranjan Gupta        31      15
+Deepranjan Gupta        44      16
+Deepranjan Gupta        24      17
+Deepranjan Gupta        52      18
+Deepranjan Gupta        92      19
+Deepranjan Gupta        40      20
+Deepranjan Gupta        29      21
+Deepranjan Gupta        90      24
+Deepranjan Gupta        32      25
+Harikrishnan Shaji      5       1
+Harikrishnan Shaji      14      5
+Harikrishnan Shaji      7       6
+Harikrishnan Shaji      26      7
+Harikrishnan Shaji      11      8
+Harikrishnan Shaji      31      9
+Harikrishnan Shaji      30      10
+Harikrishnan Shaji      19      11
+Harikrishnan Shaji      17      12
+Harikrishnan Shaji      21      14
+Harikrishnan Shaji      29      16
+Harikrishnan Shaji      20      17
+Harikrishnan Shaji      39      18
+Harikrishnan Shaji      34      20
+Harikrishnan Shaji      42      24
+Harikrishnan Shaji      36      27
+Hrisikesh Neogi 15      9
+Hrisikesh Neogi 26      12
+Hrisikesh Neogi 18      13
+Hrisikesh Neogi 62      14
+Hrisikesh Neogi 88      15
+Hrisikesh Neogi 83      17
+Hrisikesh Neogi 91      20
+Hrisikesh Neogi 26      21
+Hrisikesh Neogi 33      22
+Hrisikesh Neogi 36      23
+Hrisikesh Neogi 53      26
+Hrisikesh Neogi 47      28
+Ishawant Kumar  3       1
+Ishawant Kumar  4       2
+Ishawant Kumar  9       3
+Ishawant Kumar  16      4
+Ishawant Kumar  6       5
+Ishawant Kumar  28      6
+Ishawant Kumar  11      7
+Ishawant Kumar  60      8
+Ishawant Kumar  16      9
+Ishawant Kumar  14      11
+Ishawant Kumar  37      12
+Ishawant Kumar  25      15
+Ishawant Kumar  23      17
+Ishawant Kumar  28      20
+Ishawant Kumar  58      24
+Jawala Prakash  9       2
+Jawala Prakash  10      3
+Jawala Prakash  8       4
+Jawala Prakash  6       5
+Jawala Prakash  22      6
+Jawala Prakash  23      8
+Jawala Prakash  26      9
+Jawala Prakash  72      10
+Jawala Prakash  14      11
+Jawala Prakash  25      12
+Jawala Prakash  44      14
+Jawala Prakash  68      15
+Jawala Prakash  24      16
+Jawala Prakash  23      17
+Jawala Prakash  65      19
+Jayant Kumar    8       3
+Jayant Kumar    17      4
+Jayant Kumar    27      6
+Jayant Kumar    18      13
+Jayant Kumar    57      17
+Jaydeep Dixit   9       4
+Jaydeep Dixit   38      9
+Jaydeep Dixit   20      10
+Jaydeep Dixit   44      11
+Jaydeep Dixit   20      12
+Jaydeep Dixit   65      13
+Jaydeep Dixit   27      14
+Jaydeep Dixit   86      16
+Jaydeep Dixit   58      17
+Jaydeep Dixit   22      18
+Jaydeep Dixit   30      20
+Jaydeep Dixit   93      22
+Khushboo Priya  3       2
+Khushboo Priya  7       3
+Khushboo Priya  9       4
+Khushboo Priya  14      5
+Khushboo Priya  13      6
+Khushboo Priya  17      9
+Khushboo Priya  47      10
+Khushboo Priya  35      11
+Khushboo Priya  31      12
+Khushboo Priya  25      13
+Khushboo Priya  55      14
+Khushboo Priya  24      17
+Khushboo Priya  24      18
+Khushboo Priya  34      19
+Khushboo Priya  28      20
+Khushboo Priya  28      21
+Khushboo Priya  50      25
+Madhulika G     3       2
+Madhulika G     16      3
+Madhulika G     9       7
+Madhulika G     12      9
+Madhulika G     90      11
+Madhulika G     105     12
+Madhulika G     17      13
+Madhulika G     67      14
+Madhulika G     26      15
+Madhulika G     87      18
+Madhulika G     37      26
+Mahak   7       5
+Mahesh Sarade   16      4
+Mahesh Sarade   18      5
+Mahesh Sarade   26      7
+Mahesh Sarade   25      9
+Mahesh Sarade   18      11
+Mahesh Sarade   30      12
+Mahesh Sarade   19      13
+Mahesh Sarade   20      15
+Mahesh Sarade   55      16
+Mahesh Sarade   33      17
+Mahesh Sarade   31      18
+Mahesh Sarade   35      19
+Mahesh Sarade   38      26
+Maitry  3       2
+Maitry  5       4
+Maitry  10      10
+Maitry  37      11
+Maitry  37      12
+Maitry  46      13
+Maitry  29      14
+Maitry  27      15
+Maitry  26      18
+Maitry  64      19
+Maitry  34      21
+Maitry  31      24
+Maitry  30      27
+Maitry  51      30
+Maitry  49      33
+Maitry  63      39
+Maneesh         1       1
+Maneesh         2       2
+Manjunatha A    10      2
+Manjunatha A    6       4
+Manjunatha A    11      5
+Manjunatha A    33      7
+Manjunatha A    10      8
+Manjunatha A    32      9
+Manjunatha A    22      11
+Manjunatha A    17      12
+Manjunatha A    78      13
+Manjunatha A    77      14
+Manjunatha A    68      15
+Manjunatha A    20      18
+Manjunatha A    27      19
+Mithun S        3       1
+Mithun S        11      6
+Mithun S        9       7
+Mithun S        20      12
+Mithun S        19      13
+Mithun S        37      15
+Mithun S        23      17
+Mithun S        24      18
+Mithun S        27      19
+Mithun S        23      20
+Mithun S        28      21
+Mithun S        27      25
+Mithun S        33      26
+Mithun S        55      40
+Mithun S        97      52
+Mithun S        67      56
+Mukesh  9       8
+Mukesh  10      9
+Mukesh Rao      2       1
+Mukesh Rao      3       3
+Muskan Garg     8       2
+Muskan Garg     7       4
+Muskan Garg     11      8
+Muskan Garg     13      10
+Muskan Garg     17      13
+Nandani Gupta   11      7
+Nandani Gupta   36      9
+Nandani Gupta   17      10
+Nandani Gupta   44      11
+Nandani Gupta   23      12
+Nandani Gupta   44      13
+Nandani Gupta   59      14
+Nandani Gupta   119     15
+Nandani Gupta   22      16
+Nandani Gupta   24      17
+Nandani Gupta   51      18
+Nandani Gupta   35      19
+Nandani Gupta   75      37
+Nishtha Jain    15      2
+Nishtha Jain    12      3
+Nishtha Jain    4       4
+Nishtha Jain    13      5
+Nishtha Jain    12      9
+Nishtha Jain    29      10
+Nishtha Jain    18      12
+Nishtha Jain    35      13
+Nishtha Jain    49      15
+Nishtha Jain    68      16
+Nishtha Jain    28      19
+Nishtha Jain    25      20
+Nishtha Jain    28      22
+Nishtha Jain    37      28
+Prabir Kumar Satapathy  1       1
+Prabir Kumar Satapathy  13      3
+Prabir Kumar Satapathy  10      4
+Prabir Kumar Satapathy  11      7
+Prabir Kumar Satapathy  13      10
+Prabir Kumar Satapathy  16      11
+Prabir Kumar Satapathy  22      13
+Prabir Kumar Satapathy  37      14
+Prabir Kumar Satapathy  51      18
+Prabir Kumar Satapathy  26      19
+Prabir Kumar Satapathy  27      20
+Prabir Kumar Satapathy  39      31
+Prabir Kumar Satapathy  33      32
+Prateek _iot    4       1
+Prateek _iot    12      3
+Prateek _iot    8       4
+Prateek _iot    26      5
+Prateek _iot    18      6
+Prateek _iot    18      7
+Prateek _iot    25      8
+Prateek _iot    41      9
+Prateek _iot    19      11
+Prateek _iot    18      13
+Prerna Singh    7       3
+Prerna Singh    17      4
+Prerna Singh    35      6
+Prerna Singh    16      8
+Prerna Singh    46      9
+Prerna Singh    21      10
+Prerna Singh    37      11
+Prerna Singh    46      13
+Prerna Singh    45      14
+Prerna Singh    44      15
+Prerna Singh    26      17
+Prerna Singh    28      18
+Prerna Singh    33      20
+Rishav Dash     6       5
+Rishav Dash     20      7
+Rishav Dash     16      8
+Rishav Dash     57      10
+Rishav Dash     57      11
+Rishav Dash     24      12
+Rishav Dash     18      13
+Rishav Dash     19      14
+Rishav Dash     48      15
+Rishav Dash     71      17
+Rishav Dash     27      18
+Rishav Dash     44      33
+Saikumarreddy N 10      9
+Saikumarreddy N 15      12
+Saikumarreddy N 20      15
+Saikumarreddy N 47      17
+Saikumarreddy N 31      22
+Saikumarreddy N 27      23
+Saikumarreddy N 62      24
+Saikumarreddy N 33      27
+Saikumarreddy N 36      28
+Saikumarreddy N 40      35
+Saikumarreddy N 43      37
+Sandipan Saha   1       1
+Sandipan Saha   9       4
+Sandipan Saha   20      13
+Sanjeev Kumar   5       2
+Sanjeev Kumar   33      6
+Sanjeev Kumar   17      9
+Sanjeev Kumar   37      10
+Sanjeev Kumar   55      11
+Sanjeev Kumar   14      12
+Sanjeev Kumar   22      13
+Sanjeev Kumar   51      14
+Sanjeev Kumar   46      15
+Sanjeev Kumar   38      18
+Sanjeev Kumar   25      19
+Sanjeev Kumar   97      20
+Sanjeev Kumar   34      23
+Sanjeev Kumar   33      26
+Saurabh Shukla  1       1
+Saurabh Shukla  9       2
+Saurabh Shukla  6       3
+Shiva Srivastava        2       2
+Shiva Srivastava        19      6
+Shiva Srivastava        8       7
+Shiva Srivastava        13      9
+Shiva Srivastava        11      10
+Shivan K        6       1
+Shivan K        3       2
+Shivan K        9       5
+Shivan K        14      7
+Shivan K        13      9
+Shivan K        14      10
+Shivan K        49      11
+Shivan K        18      12
+Shivan K        14      13
+Shivan K        44      15
+Shivan K        26      16
+Shivan K        51      17
+Shivan K        29      21
+Shivan K        29      24
+Shivan K        36      25
+Shivan_S        7       4
+Shivananda Sonwane      7       1
+Shivananda Sonwane      28      4
+Shivananda Sonwane      20      5
+Shivananda Sonwane      7       6
+Shivananda Sonwane      28      8
+Shivananda Sonwane      49      9
+Shivananda Sonwane      51      10
+Shivananda Sonwane      39      11
+Shivananda Sonwane      47      12
+Shivananda Sonwane      20      13
+Shivananda Sonwane      66      14
+Shivananda Sonwane      30      17
+Shivananda Sonwane      49      18
+Shubham Sharma  11      5
+Shubham Sharma  13      8
+Shubham Sharma  24      9
+Shubham Sharma  34      10
+Shubham Sharma  45      11
+Shubham Sharma  40      12
+Shubham Sharma  107     13
+Shubham Sharma  25      15
+Shubham Sharma  26      19
+Shubham Sharma  41      21
+Shubham Sharma  70      22
+Shubham Sharma  74      24
+Sowmiya Sivakumar       15      10
+Sowmiya Sivakumar       64      14
+Sowmiya Sivakumar       44      16
+Sowmiya Sivakumar       24      18
+Sowmiya Sivakumar       28      19
+Sowmiya Sivakumar       31      20
+Sudhanshu Kumar 2       1
+Suraj S Bilgi   8       4
+Suraj S Bilgi   20      11
+Swati   14      6
+Swati   15      8
+Swati   36      9
+Swati   47      12
+Swati   25      13
+Swati   24      14
+Swati   21      15
+Swati   27      18
+Swati   73      21
+Swati   38      23
+Swati   55      27
+Swati   43      28
+Swati   52      29
+Swati   54      37
+Tarun   22      6
+Vivek   6       2
+Vivek   13      3
+Vivek   10      5
+Vivek   15      7
+Wasim   16      9
+Wasim   12      10
+Wasim   41      14
+Wasim   30      15
+Wasim   75      16
+Wasim   62      17
+Wasim   31      19
+Wasim   32      21
+Wasim   68      24
+Wasim   66      26
+Zeeshan         13      6
+Zeeshan         45      13
+Zeeshan         21      15
+Zeeshan         23      16
+Zeeshan         30      17
+Zeeshan         24      20
+Zeeshan         35      22
+Zeeshan         99      24
+Zeeshan         78      25
+Zeeshan         82      28
+Zeeshan         92      35
+Time taken: 1.352 seconds, Fetched: 494 row(s)
+
+
+16. Perform inner join, left join and right join based on the agent column and after joining the table export that data into your local system.
+
